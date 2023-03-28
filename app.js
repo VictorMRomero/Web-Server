@@ -1,12 +1,20 @@
+const express = require('express');
+const app = express();
 
-const http = require('http');
-
-const server = http.createServer((req, res) => {
-    res.write('Hola mundo');
-    res.end();
-})
-
-.listen( 8080 );
+// servir estatico 
+app.use( express.static('public') );
 
 
-console.log('Escuchando el puerto', 8080)
+
+app.get('/generic', (req, res) => {
+    res.sendFile(__dirname + '/public/generic.html')
+});
+
+app.get('/elements', (req, res) => {
+    res.sendFile(__dirname + '/public/elements.html')
+});
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/public/404.html')
+});
+
+app.listen(8080)
